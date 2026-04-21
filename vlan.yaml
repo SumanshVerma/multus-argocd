@@ -1,0 +1,18 @@
+apiVersion: nmstate.io/v1
+kind: NodeNetworkConfigurationPolicy
+metadata:
+  name: vlan-policy
+  annotations:
+    argocd.argoproj.io/sync-wave: "4"
+spec:
+  desiredState:
+    interfaces:
+      - name: vlan-990
+        description: vlan-990 as a port
+        type: vlan
+        state: up
+        vlan:
+          base-iface: bond1
+          id: 990
+  nodeSelector:
+    node-role.kubernetes.io/worker: ""

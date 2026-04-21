@@ -1,0 +1,24 @@
+apiVersion: nmstate.io/v1
+kind: NodeNetworkConfigurationPolicy
+metadata:
+  annotations:
+    description: LACP bond for Multus with MTU 9000 on worker nodes
+    argocd.argoproj.io/sync-wave: "3"
+  name: bond1-nncp-worker
+spec:
+  nodeSelector:
+    node-role.kubernetes.io/worker: ""
+  desiredState:
+    interfaces:
+      - name: bond1
+        type: bond
+        state: up
+        mtu: 1500
+        ipv4:
+          enabled: false
+        ipv6:
+          enabled: false
+        link-aggregation:
+          mode: active-backup
+          port:
+            - enp1s0
